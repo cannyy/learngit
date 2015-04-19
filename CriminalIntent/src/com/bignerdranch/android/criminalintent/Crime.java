@@ -4,6 +4,8 @@ package com.bignerdranch.android.criminalintent;
 import java.util.Date;
 import java.util.UUID;
 
+import android.R.string;
+
 public class Crime {
 	private UUID mId;
 	private String mTitle;
@@ -12,6 +14,11 @@ public class Crime {
 	public Crime() {
 		mDate=new Date() ;
 		mId = UUID.randomUUID();
+		
+	}
+	@Override
+	public String toString(){
+		return mTitle;
 	}
 	public String getTitle() {
 		return mTitle;

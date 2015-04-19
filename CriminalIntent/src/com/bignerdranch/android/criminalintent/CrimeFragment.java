@@ -1,5 +1,7 @@
 package com.bignerdranch.android.criminalintent;
 
+import java.util.UUID;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -18,12 +20,16 @@ public class CrimeFragment extends Fragment {
 	private EditText mTitleField;
 	private Button mDateButton;
 	private CheckBox mSolvedCheckBox;
+	public static final String EXTRA_CRIME_ID="com.bignerdranch.android.criminalintent.crime_id";
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mCrime=new Crime();
+		UUID crimeID=(UUID)getActivity().getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+		mCrime=CrimeLab.get(getActivity()).getCrime(crimeID);
 	}
 
 	@Override
@@ -32,6 +38,7 @@ public class CrimeFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View v=inflater.inflate(R.layout.fragment_crime,container, false);
 		mTitleField=(EditText)v.findViewById(R.id.crime_title);
+		mTitleField.setText(mCrime.getTitle());
 		mTitleField.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -56,9 +63,11 @@ public class CrimeFragment extends Fragment {
 		
 		mDateButton=(Button)v.findViewById(R.id.crime_date);
 		mDateButton.setText(mCrime.getDate().toString());
+		
 		mDateButton.setEnabled(false);
 		
 		mSolvedCheckBox=(CheckBox)v.findViewById(R.id.crime_solved);
+		mSolvedCheckBox.setChecked(mCrime.isSolved());
 		mSolvedCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
