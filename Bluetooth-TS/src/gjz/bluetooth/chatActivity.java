@@ -1,12 +1,13 @@
 package gjz.bluetooth;
 
-import gjz.bluetooth.R;
 import gjz.bluetooth.Bluetooth.ServerOrCilent;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -21,11 +22,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class chatActivity extends Activity implements OnItemClickListener ,OnClickListener{
     /** Called when the activity is first created. */
@@ -37,6 +38,8 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 	private EditText editMsgView;
 	deviceListAdapter mAdapter;
 	Context mContext;
+	
+	private RecordDatabaseHelper mHelper;//定义RecordDBH类
 	
 	/* 一些常量，代表服务器的名称 */
 	public static final String PROTOCOL_SCHEME_L2CAP = "btl2cap";
@@ -69,6 +72,8 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 		mListView.setFastScrollEnabled(true);
 		editMsgView= (EditText)findViewById(R.id.MessageText);	
 		editMsgView.clearFocus();
+		
+		 mHelper=new RecordDatabaseHelper(mContext);
 		
 		sendButton= (Button)findViewById(R.id.btn_msg_send);
 		sendButton.setOnClickListener(new OnClickListener() {
@@ -207,7 +212,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				Log.d("server", "wait cilent connect...");
 				
 				Message msg = new Message();
-				msg.obj = "请稍候，正在等待客户端的连接...";
+				msg.obj = "请稍候，正在等待客户端的连接...";//启动服务端后首先显示的内容
 				msg.what = 0;
 				LinkDetectedHandler.sendMessage(msg);
 				
@@ -218,7 +223,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				Message msg2 = new Message();
 				String info = "客户端已经连接上！可以发送信息。";
 				msg2.obj = info;
-				msg.what = 0;
+				msg2.what = 0;
 				LinkDetectedHandler.sendMessage(msg2);
 				//启动接受数据
 				mreadThread = new readThread();
@@ -329,11 +334,21 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				    	{
 				    		buf_data[i] = buffer[i];
 				    	}
-						String s = new String(buf_data);
+						String s = new String(buf_data);//接收到的数据
+						int ip = s.indexOf("110");
+				        int ix = s.indexOf("81..");
+				        int iy = s.indexOf("82..");
+				        int iz = s.indexOf("83..");
+				        String sp=s.substring(ip+7, ip+15);
+				        String sx=s.substring(ix+7, ix+15);
+				        String sy=s.substring(iy+7, iy+15);
+				        String sz=s.substring(iz+7, iz+15);
+				       Record record=new Record();
+				       record.setmId(mHelper.insertPoint(sp, sx, sy, sz));
 						Message msg = new Message();
 						msg.obj = s;
 						msg.what = 1;
-						LinkDetectedHandler.sendMessage(msg);
+						LinkDetectedHandler.sendMessage(msg);//传递给handler
                     }
                 } catch (IOException e) {
                 	try {
