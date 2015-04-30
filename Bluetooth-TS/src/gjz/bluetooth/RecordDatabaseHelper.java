@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class RecordDatabaseHelper extends SQLiteOpenHelper {
 	 private static final String DB_NAME = "record.sqlite";
@@ -18,15 +19,18 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
 	    private static final String COLUMN_RECORD_X = "x";
 	    private static final String COLUMN_RECORD_Y = "y";
 	    private static final String COLUMN_RECORD_Z = "z";
-	    
-	    public RecordDatabaseHelper(Context context) {
-	        super(context, DB_NAME, null, VERSION);
+	    private Context mContext;
+	    public RecordDatabaseHelper(Context context,String name, CursorFactory
+	    		factory, int version) {
+	    	super(context, name, factory, version);
+	    	mContext = context;
 	    }
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		db.execSQL("create table record (_id integer primary key autoincrement, pt string, x string, y string,z string)");
+		Toast.makeText(mContext, "Create succeeded", Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

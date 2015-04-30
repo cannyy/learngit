@@ -13,7 +13,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -68,12 +70,26 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 		mAdapter = new deviceListAdapter(this, list);
 		mListView = (ListView) findViewById(R.id.list);
 		mListView.setAdapter(mAdapter);
+		 
 		mListView.setOnItemClickListener(this);
 		mListView.setFastScrollEnabled(true);
 		editMsgView= (EditText)findViewById(R.id.MessageText);	
 		editMsgView.clearFocus();
 		
-		 mHelper=new RecordDatabaseHelper(mContext);
+		
+		//建立数据库
+		 mHelper=new RecordDatabaseHelper(this,"Record.db",null,1);
+		mHelper.getWritableDatabase();
+		
+		SQLiteDatabase db = mHelper.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		
+//        values.put("pt", "x");//test success
+//        values.put("x", "x");
+//        values.put("y", "z");
+//        values.put("z", "x");
+//        db.insert("record", null, values);
+		
 		
 		sendButton= (Button)findViewById(R.id.btn_msg_send);
 		sendButton.setOnClickListener(new OnClickListener() {
@@ -335,6 +351,10 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				    		buf_data[i] = buffer[i];
 				    	}
 						String s = new String(buf_data);//接收到的数据
+						
+						//添加到数据库
+						SQLiteDatabase db = mHelper.getWritableDatabase();
+						ContentValues values = new ContentValues();
 						int ip = s.indexOf("110");
 				        int ix = s.indexOf("81..");
 				        int iy = s.indexOf("82..");
@@ -343,8 +363,18 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				        String sx=s.substring(ix+7, ix+15);
 				        String sy=s.substring(iy+7, iy+15);
 				        String sz=s.substring(iz+7, iz+15);
-				       Record record=new Record();
-				       record.setmId(mHelper.insertPoint(sp, sx, sy, sz));
+				        values.put("COLUMN_RECORD_PT", sp);
+				        values.put("COLUMN_RECORD_X", sx);
+				        values.put("COLUMN_RECORD_Y", sy);
+				        values.put("COLUMN_RECORD_Z", sz);
+				        db.insert("record", null, values);
+				        Toast.makeText(mContext, "Insert succeeded", Toast.LENGTH_SHORT).show();
+				        
+//				       Record record=new Record();
+//				       record.setmId(mHelper.insertPoint(sp, sx, sy, sz));
+				        
+				        
+				        
 						Message msg = new Message();
 						msg.obj = s;
 						msg.what = 1;
