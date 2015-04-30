@@ -37,7 +37,10 @@ public class Bluetooth extends TabActivity {
         		.setContent(new Intent(mContext, deviceActivity.class)));      
         mTabHost.addTab(mTabHost.newTabSpec("Tab2").
         		setIndicator("对话列表",getResources().getDrawable(android.R.drawable.ic_menu_add))
-        		.setContent(new Intent(mContext, chatActivity.class)));            
+        		.setContent(new Intent(mContext, chatActivity.class))); 
+        mTabHost.addTab(mTabHost.newTabSpec("Tab3")
+        		.setIndicator("数据显示",getResources().getDrawable(android.R.drawable.ic_menu_add))
+        		.setContent(new Intent(mContext, RecordListActivity.class)));
         mTabHost.setOnTabChangedListener(new OnTabChangeListener(){
         	public void onTabChanged(String tabId) {
         		// TODO Auto-generated method stub    

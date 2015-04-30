@@ -84,11 +84,11 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 		SQLiteDatabase db = mHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		
-//        values.put("pt", "x");//test success
-//        values.put("x", "x");
-//        values.put("y", "z");
-//        values.put("z", "x");
-//        db.insert("record", null, values);
+        values.put("pt", "x");//test success
+        values.put("x", "x");
+        values.put("y", "z");
+        values.put("z", "x");
+        db.insert("record", null, values);
 		
 		
 		sendButton= (Button)findViewById(R.id.btn_msg_send);
@@ -354,6 +354,8 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 						
 						//添加到数据库
 						SQLiteDatabase db = mHelper.getWritableDatabase();
+						db.beginTransaction();
+						try{
 						ContentValues values = new ContentValues();
 						int ip = s.indexOf("110");
 				        int ix = s.indexOf("81..");
@@ -368,6 +370,10 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				        values.put("COLUMN_RECORD_Y", sy);
 				        values.put("COLUMN_RECORD_Z", sz);
 				        db.insert("record", null, values);
+						}catch(Exception e){
+							e.printStackTrace();
+							
+						}finally{db.endTransaction();};
 				        Toast.makeText(mContext, "Insert succeeded", Toast.LENGTH_SHORT).show();
 				        
 //				       Record record=new Record();

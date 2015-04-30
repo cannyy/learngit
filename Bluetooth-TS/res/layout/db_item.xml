@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	>
+
+	<TextView android:id="@+id/point" android:layout_gravity="center_vertical"
+		android:paddingTop="18dip" android:layout_height="wrap_content"
+		android:layout_width="60dip" android:textSize="20dip"
+		android:textColor="@android:color/white" android:layout_weight="2.0" />
+
+	<TextView android:id="@+id/line1" android:layout_height="62dip"
+		android:layout_width="1dip" android:background="@android:color/white"
+		android:layout_toRightOf="@+id/point" />
+
+	<TextView android:id="@+id/x" android:layout_gravity="center_vertical"
+		android:paddingTop="18dip" android:layout_height="wrap_content"
+		android:layout_width="80dip" android:textSize="20dip"
+		android:textColor="@android:color/white" android:layout_weight="2.0" 
+		android:layout_toRightOf="@+id/line1"/>
+
+	<TextView android:id="@+id/line2" android:layout_height="62dip"
+		android:layout_width="1dip" android:background="@android:color/white"
+		android:layout_toRightOf="@+id/x" />
+	<TextView android:id="@+id/y" android:layout_gravity="center_vertical"
+		android:paddingTop="18dip" android:layout_height="wrap_content"
+		android:layout_width="80dip" android:textSize="20dip"
+		android:textColor="@android:color/white" android:layout_weight="2.0" 
+		android:layout_toRightOf="@+id/line2"/>
+
+	<TextView android:id="@+id/line3" android:layout_height="62dip"
+		android:layout_width="1dip" android:background="@android:color/white"
+		android:layout_toRightOf="@+id/y" />
+	<TextView android:id="@+id/z" android:layout_gravity="center_vertical"
+		android:paddingTop="18dip" android:layout_height="wrap_content"
+		android:layout_width="80dip" android:textSize="20dip"
+		android:textColor="@android:color/white" android:layout_weight="2.0"
+		android:layout_toRightOf="@+id/line3" />
+
+	
+
+</RelativeLayout>
