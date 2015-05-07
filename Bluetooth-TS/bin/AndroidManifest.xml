@@ -14,7 +14,8 @@
 
     <activity android:name=".chatActivity" />
 	<activity android:name="gjz.bluetooth.deviceActivity" />     
-	<activity android:name="gjz.bluetooth.RecordListActivity" />               
+	<activity android:name="gjz.bluetooth.RecordListActivity" />         
+	<activity android:name="gjz.bluetooth.Setting" />               
             
     </application>
 	

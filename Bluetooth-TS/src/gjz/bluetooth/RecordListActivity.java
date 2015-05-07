@@ -29,7 +29,7 @@ public class RecordListActivity extends Activity{
 				new String[] { "_id", "x", "y", "z" },// 游标数据的名称，实际是Table列名字
 				new int[] { R.id.point, R.id.x, R.id.y, R.id.z });// 对应的UI微件的id
 		list.setAdapter(adapter);
-		Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+		
 
 	}
 }

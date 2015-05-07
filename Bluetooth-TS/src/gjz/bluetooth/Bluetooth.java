@@ -23,6 +23,7 @@ public class Bluetooth extends TabActivity {
     static String BlueToothAddress = "null";
     static ServerOrCilent serviceOrCilent = ServerOrCilent.NONE;
     static boolean isOpen = false;
+   
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,10 @@ public class Bluetooth extends TabActivity {
         mContext = this;        
     	setContentView(R.layout.main);
         //实例化
-    	mTabHost = (AnimationTabHost) getTabHost();         
+    	mTabHost = (AnimationTabHost) getTabHost();     
+    	mTabHost.addTab(mTabHost.newTabSpec("Tab")
+        		.setIndicator("参数设置",getResources().getDrawable(android.R.drawable.ic_menu_add))
+        		.setContent(new Intent(mContext, Setting.class)));
         mTabHost.addTab(mTabHost.newTabSpec("Tab1")
         		.setIndicator("设备列表",getResources().getDrawable(android.R.drawable.ic_menu_add))
         		.setContent(new Intent(mContext, deviceActivity.class)));      
@@ -41,8 +45,10 @@ public class Bluetooth extends TabActivity {
         mTabHost.addTab(mTabHost.newTabSpec("Tab3")
         		.setIndicator("数据显示",getResources().getDrawable(android.R.drawable.ic_menu_add))
         		.setContent(new Intent(mContext, RecordListActivity.class)));
+        
         mTabHost.setOnTabChangedListener(new OnTabChangeListener(){
-        	public void onTabChanged(String tabId) {
+        	@Override
+			public void onTabChanged(String tabId) {
         		// TODO Auto-generated method stub    
         		if(tabId.equals("Tab1"))
         		{        			
@@ -51,7 +57,8 @@ public class Bluetooth extends TabActivity {
         });
         mTabHost.setCurrentTab(0); 
     }
-	  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	  @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		  Toast.makeText(mContext, "address:", Toast.LENGTH_SHORT).show();
 

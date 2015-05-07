@@ -19,29 +19,34 @@ public class deviceListAdapter extends BaseAdapter {
 		mInflater = LayoutInflater.from(context);
     }
 
-    public int getCount() {
+    @Override
+	public int getCount() {
         return list.size();
     }
 
-    public Object getItem(int position) {
+    @Override
+	public Object getItem(int position) {
         return list.get(position);
     }
 
-    public long getItemId(int position) {
+    @Override
+	public long getItemId(int position) {
         return position;
     }
 
-    public int getItemViewType(int position) {
+    @Override
+	public int getItemViewType(int position) {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+	public View getView(int position, View convertView, ViewGroup parent) {
     	ViewHolder viewHolder = null;
     	deviceListItem  item=list.get(position);
         if(convertView == null){
         	convertView = mInflater.inflate(R.layout.list_item, null);          
         	viewHolder=new ViewHolder(
-        			(View) convertView.findViewById(R.id.list_child),
+        			convertView.findViewById(R.id.list_child),
         			(TextView) convertView.findViewById(R.id.chat_msg)
         	       );
         	convertView.setTag(viewHolder);

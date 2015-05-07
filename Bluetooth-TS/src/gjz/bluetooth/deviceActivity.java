@@ -132,7 +132,8 @@ public class deviceActivity extends Activity {
 		
     // The on-click listener for all devices in the ListViews
     private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
-        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+        @Override
+		public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect     
         	
         	SiriListItem item = list.get(arg2);
@@ -144,17 +145,19 @@ public class deviceActivity extends Activity {
              StopDialog.setTitle("连接");//标题          
              StopDialog.setMessage(item.message);
              StopDialog.setPositiveButton("连接", new DialogInterface.OnClickListener() {  
-             public void onClick(DialogInterface dialog, int which) {  
+             @Override
+			public void onClick(DialogInterface dialog, int which) {  
                  // TODO Auto-generated method stub   
             	 mBtAdapter.cancelDiscovery();
             	 seachButton.setText("重新搜索");     
                  
             	 Bluetooth.serviceOrCilent=ServerOrCilent.CILENT;
-                 Bluetooth.mTabHost.setCurrentTab(1);   
+                 Bluetooth.mTabHost.setCurrentTab(2);   
              }  
              });
              StopDialog.setNegativeButton("取消",new DialogInterface.OnClickListener() {                       
-                 public void onClick(DialogInterface dialog, int which) {  
+                 @Override
+				public void onClick(DialogInterface dialog, int which) {  
                 	 Bluetooth.BlueToothAddress = null;
                  }
              });

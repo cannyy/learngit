@@ -29,7 +29,7 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL("create table record (_id integer primary key autoincrement, pt string, x string, y string,z string)");
+		db.execSQL("create table record (_id integer primary key autoincrement, pt string, x string, y string,z string,area string,part string)");
 		Toast.makeText(mContext, "Create succeeded", Toast.LENGTH_SHORT).show();
 	}
 
@@ -38,13 +38,13 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 
 	}
-	 public long insertPoint(String pt,String x, String y,String z) {
-	        ContentValues cv = new ContentValues();
-	        cv.put(COLUMN_RECORD_PT,pt);
-	        cv.put(COLUMN_RECORD_X,x);
-	        cv.put(COLUMN_RECORD_Y,y);
-	        cv.put(COLUMN_RECORD_Z,z);
-	        return getWritableDatabase().insert(TABLE_record, null, cv);
-	    }
+//	 public long insertPoint(String pt,String x, String y,String z) {
+//	        ContentValues cv = new ContentValues();
+//	        cv.put(COLUMN_RECORD_PT,pt);
+//	        cv.put(COLUMN_RECORD_X,x);
+//	        cv.put(COLUMN_RECORD_Y,y);
+//	        cv.put(COLUMN_RECORD_Z,z);
+//	        return getWritableDatabase().insert(TABLE_record, null, cv);
+//	    }
 
 }

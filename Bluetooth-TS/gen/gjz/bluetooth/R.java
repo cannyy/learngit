@@ -16,8 +16,11 @@ public final class R {
         public static final int msgbox_send=0x7f020002;
     }
     public static final class id {
+        public static final int Btn_ceduan=0x7f050016;
+        public static final int Btn_cequ=0x7f050015;
         public static final int LayoutSwitch=0x7f050014;
         public static final int MessageText=0x7f050004;
+        public static final int Spinner01=0x7f050017;
         public static final int bt_bottombar=0x7f05000f;
         public static final int btn_disconnect=0x7f050002;
         public static final int btn_msg_send=0x7f050003;
@@ -34,6 +37,7 @@ public final class R {
         public static final int point=0x7f050006;
         public static final int start_seach=0x7f050011;
         public static final int start_service=0x7f050010;
+        public static final int start_service_2=0x7f050018;
         public static final int x=0x7f050008;
         public static final int y=0x7f05000a;
         public static final int z=0x7f05000c;
@@ -45,6 +49,7 @@ public final class R {
         public static final int devices=0x7f030003;
         public static final int list_item=0x7f030004;
         public static final int main=0x7f030005;
+        public static final int setting=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

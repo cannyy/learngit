@@ -15,6 +15,8 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +43,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 	deviceListAdapter mAdapter;
 	Context mContext;
 	
+	
 	private RecordDatabaseHelper mHelper;//定义RecordDBH类
 	
 	/* 一些常量，代表服务器的名称 */
@@ -57,11 +60,18 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 	private readThread mreadThread = null;;	
 	private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	
+	 private String _c1;
+	 private String _c2;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.chat);
         mContext = this;
+      //取得sharedprefrence的值；
+        SharedPreferences sharedata = this.getSharedPreferences("tao", 0);
+        _c1=sharedata.getString("cequ", null);
+         _c2=sharedata.getString("ceduan", null);
         init();
     }
     
@@ -78,18 +88,20 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 		
 		
 		//建立数据库
-		 mHelper=new RecordDatabaseHelper(this,"Record.db",null,1);
-		mHelper.getWritableDatabase();
+		mHelper=new RecordDatabaseHelper(mContext,"Record.db",null,1);
+ 		mHelper.getWritableDatabase();
+//		 mHelper=new RecordDatabaseHelper(this,"Record.db",null,1);
+//		mHelper.getWritableDatabase();
+//		
+//		SQLiteDatabase db = mHelper.getWritableDatabase();
+//		ContentValues values = new ContentValues();
 		
-		SQLiteDatabase db = mHelper.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		
-        values.put("pt", "x");//test success
-        values.put("x", "x");
-        values.put("y", "z");
-        values.put("z", "x");
-        db.insert("record", null, values);
-		
+//        values.put("pt", "x");//test success
+//        values.put("x", "x");
+//        values.put("y", "z");
+//        values.put("z", "x");
+//        db.insert("record", null, values);
+//		
 		
 		sendButton= (Button)findViewById(R.id.btn_msg_send);
 		sendButton.setOnClickListener(new OnClickListener() {
@@ -183,6 +195,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
     }
 	//开启客户端
 	private class clientThread extends Thread { 		
+		@Override
 		public void run() {
 			try {
 				//创建一个Socket连接：只需要服务器在注册时的UUID号
@@ -217,6 +230,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 
 	//开启服务器
 	private class ServerThread extends Thread { 
+		@Override
 		public void run() {
 					
 			try {
@@ -253,6 +267,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 	/* 停止服务器 */
 	private void shutdownServer() {
 		new Thread() {
+			@Override
 			public void run() {
 				if(startServerThread != null)
 				{
@@ -284,6 +299,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 	/* 停止客户端连接 */
 	private void shutdownClient() {
 		new Thread() {
+			@Override
 			public void run() {
 				if(clientConnectThread!=null)
 				{
@@ -328,8 +344,11 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 	}
 	//读取数据
     private class readThread extends Thread { 
-        public void run() {
-        	
+        @Override
+		public void run() {
+        
+     		
+     		SQLiteDatabase db = mHelper.getWritableDatabase();
             byte[] buffer = new byte[1024];
             int bytes;
             InputStream mmInStream = null;
@@ -353,9 +372,9 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 						String s = new String(buf_data);//接收到的数据
 						
 						//添加到数据库
-						SQLiteDatabase db = mHelper.getWritableDatabase();
-						db.beginTransaction();
-						try{
+						
+//						db.beginTransaction();
+//						try{
 						ContentValues values = new ContentValues();
 						int ip = s.indexOf("110");
 				        int ix = s.indexOf("81..");
@@ -365,16 +384,20 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				        String sx=s.substring(ix+7, ix+15);
 				        String sy=s.substring(iy+7, iy+15);
 				        String sz=s.substring(iz+7, iz+15);
-				        values.put("COLUMN_RECORD_PT", sp);
-				        values.put("COLUMN_RECORD_X", sx);
-				        values.put("COLUMN_RECORD_Y", sy);
-				        values.put("COLUMN_RECORD_Z", sz);
+				        
+				        
+				        values.put("pt", sp);
+				        values.put("x", sx);
+				        values.put("y", sy);
+				        values.put("z", sz);
+				        values.put("cequ", _c1);
+				        values.put("ceduan", _c2);
 				        db.insert("record", null, values);
-						}catch(Exception e){
-							e.printStackTrace();
-							
-						}finally{db.endTransaction();};
-				        Toast.makeText(mContext, "Insert succeeded", Toast.LENGTH_SHORT).show();
+//						}catch(Exception e){
+//							e.printStackTrace();
+//							
+//						}finally{db.endTransaction();};
+				    
 				        
 //				       Record record=new Record();
 //				       record.setmId(mHelper.insertPoint(sp, sx, sy, sz));
@@ -389,6 +412,7 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
                 } catch (IOException e) {
                 	try {
 						mmInStream.close();
+						db.close();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
