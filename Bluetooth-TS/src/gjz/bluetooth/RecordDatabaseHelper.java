@@ -29,7 +29,7 @@ public class RecordDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL("create table record (_id integer primary key autoincrement, pt string, x string, y string,z string,area string,part string)");
+		db.execSQL("create table record (_id integer primary key autoincrement, pt string, x string, y string,z string,cequ string,ceduan string)");
 		Toast.makeText(mContext, "Create succeeded", Toast.LENGTH_SHORT).show();
 	}
 

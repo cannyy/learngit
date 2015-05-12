@@ -28,7 +28,7 @@
 	      	 android:layout_height = "wrap_content"
 	      	 android:layout_toLeftOf="@id/btn_msg_send"
 	      	 android:layout_toRightOf="@+id/btn_disconnect"  	      	 
-	      	 android:hint = "说点什么呢?"
+	      
 	      	 android:textSize="15dip"
 	      	 android:id = "@+id/MessageText"/>
 	</RelativeLayout>  

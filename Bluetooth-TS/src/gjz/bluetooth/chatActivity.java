@@ -392,7 +392,9 @@ public class chatActivity extends Activity implements OnItemClickListener ,OnCli
 				        values.put("z", sz);
 				        values.put("cequ", _c1);
 				        values.put("ceduan", _c2);
+				        
 				        db.insert("record", null, values);
+				        Log.d("123","1");
 //						}catch(Exception e){
 //							e.printStackTrace();
 //							

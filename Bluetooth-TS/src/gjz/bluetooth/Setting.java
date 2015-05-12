@@ -45,8 +45,7 @@ public class Setting extends Activity {
 		spinner.setVisibility(View.VISIBLE);
 		edittext1=(EditText)this.findViewById(R.id.Btn_cequ);
 		edittext2=(EditText)this.findViewById(R.id.Btn_ceduan);
-		final String c1=edittext1.getText().toString();
-		final String c2=edittext2.getText().toString();
+		
 		
 		serviceButton = (Button) findViewById(R.id.start_service_2);
 		
@@ -55,6 +54,8 @@ public class Setting extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Bluetooth.serviceOrCilent = ServerOrCilent.SERVICE;
+				final String c1=edittext1.getText().toString();
+				final String c2=edittext2.getText().toString();
 				Editor sharedata = (Editor) getSharedPreferences("tao", 0).edit();//´«µÝ²ÎÊý
 				sharedata.putString("cequ",c1 );
 				sharedata.putString("ceduan",c2 );
