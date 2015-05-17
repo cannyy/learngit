@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/view_login"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <ImageButton
+        android:id="@+id/Btn_lo"
+        android:layout_width="100dip"
+        android:layout_height="40dip"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/button_login" />
+
+   
+
+    <EditText
+        android:id="@+id/e1"
+        android:layout_width="190dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="160dp"
+        android:background="#1a1a19"
+        android:drawableLeft="@drawable/rectangle1"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:padding="10px"
+        android:singleLine="true"
+       
+        android:textColor="#FFFFFF" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/e2"
+        android:layout_width="190dp"
+        android:layout_height="32dp"
+        android:layout_below="@id/e1"
+        android:layout_alignLeft="@+id/e1"
+       android:layout_marginTop="30dp"
+        android:background="#1a1a19"
+        android:drawableLeft="@drawable/rectangle2"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:padding="10px"
+        android:singleLine="true"
+       
+        android:textColor="#FFFFFF" >>
+    </EditText>
+
+</RelativeLayout>
